@@ -26,3 +26,11 @@ Exemplos de stakeholders no contexto da arquitetura de software:
 - **Investidores ou Patrocinadores**: Fornecem os recursos financeiros e esperam retorno sobre o investimento.
 
 Entender as necessidades e expectativas dos stakeholders é essencial para criar uma arquitetura que atenda aos objetivos do projeto e agregue valor ao negócio.
+
+## Custo | Prazo | Qualidade
+
+Na arquitetura de software, é essencial considerar três pilares fundamentais: **Custo**, **Prazo** e **Qualidade**. 
+
+O arquiteto deve avaliar cuidadosamente esses aspectos ao iniciar o projeto, pois os requisitos arquiteturais serão definidos com base na prioridade estabelecida pela empresa. Por exemplo, a organização pode optar por priorizar a redução de custos, a entrega rápida ou a alta qualidade do produto final. 
+
+Essas decisões impactam diretamente as escolhas técnicas e estratégicas ao longo do desenvolvimento do projeto.
