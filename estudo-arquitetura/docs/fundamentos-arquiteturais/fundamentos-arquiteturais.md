@@ -34,3 +34,31 @@ Na arquitetura de software, é essencial considerar três pilares fundamentais: 
 O arquiteto deve avaliar cuidadosamente esses aspectos ao iniciar o projeto, pois os requisitos arquiteturais serão definidos com base na prioridade estabelecida pela empresa. Por exemplo, a organização pode optar por priorizar a redução de custos, a entrega rápida ou a alta qualidade do produto final. 
 
 Essas decisões impactam diretamente as escolhas técnicas e estratégicas ao longo do desenvolvimento do projeto.
+
+## Componentes Arquiteturais
+
+Os componentes arquiteturais são elementos fundamentais de uma arquitetura de software, cada um com um propósito bem definido e responsável por executar tarefas específicas dentro do sistema. Eles colaboram para atender aos requisitos funcionais e não funcionais da aplicação, garantindo modularidade, escalabilidade e manutenibilidade.
+
+### Exemplos de Componentes Arquiteturais:
+- **Cache**: Armazena dados temporariamente para melhorar o desempenho e reduzir a latência de acesso.
+- **Fila (Message Queue)**: Gerencia a comunicação assíncrona entre serviços, garantindo resiliência e desacoplamento.
+- **API Gateway**: Atua como ponto de entrada único para APIs, gerenciando autenticação, roteamento e limitação de taxa (rate limiting).
+- **Log**: Registra eventos e informações do sistema para auditoria, depuração e análise.
+- **Monitoramento**: Coleta métricas e dados de desempenho para identificar problemas e garantir a saúde do sistema.
+- **NoSQL**: Banco de dados não relacional, ideal para armazenar grandes volumes de dados não estruturados ou semi-estruturados.
+- **RDBMS (Relational Database Management System)**: Banco de dados relacional, utilizado para armazenar dados estruturados com suporte a transações e consultas complexas.
+- **Orquestrador de Containers**: Gerencia a implantação, escalabilidade e operação de contêineres (e.g., Kubernetes).
+- **Identity Provider (IdP)**: Gerencia autenticação e autorização, permitindo Single Sign-On (SSO) e integração com provedores externos.
+
+Esses componentes são escolhidos e configurados de acordo com as necessidades do projeto, garantindo que a arquitetura seja robusta, eficiente e alinhada aos objetivos do negócio.
+
+## ACID
+
+O acrônimo **ACID** representa os quatro pilares fundamentais que garantem a confiabilidade e integridade das transações em sistemas de banco de dados: **Atomicidade**, **Consistência**, **Isolamento** e **Durabilidade**.
+
+- **Atomicidade**: Garante que todas as operações de uma transação sejam concluídas com sucesso ou, em caso de falha, nenhuma delas seja aplicada. É o princípio do "tudo ou nada".
+- **Consistência**: Assegura que o banco de dados permaneça em um estado válido antes e depois da transação, respeitando todas as regras de integridade e restrições definidas.
+- **Isolamento**: Garante que as transações sejam executadas de forma independente, sem interferir umas nas outras, mesmo quando ocorrem simultaneamente. Isso evita problemas como leituras sujas, leituras não repetíveis e leituras fantasmas.
+- **Durabilidade**: Uma vez que uma transação é confirmada (commit), suas alterações são permanentemente gravadas no banco de dados, mesmo em caso de falhas no sistema.
+
+Esses princípios são essenciais para garantir a integridade e a confiabilidade dos dados em sistemas transacionais.
