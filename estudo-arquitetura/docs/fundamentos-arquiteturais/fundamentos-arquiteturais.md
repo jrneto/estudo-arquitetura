@@ -1,12 +1,16 @@
 # Fundamentos Arquiteturais
 
 ## RAs - Requisitos Arquiteturais
+
 Os Requisitos Arquiteturais (RAs) são as necessidades ou restrições que guiam o design e a implementação de uma arquitetura de software. Eles podem ser divididos em:
+
 - **Requisitos Funcionais**: Definem o que o sistema deve fazer, como funcionalidades específicas.
 - **Requisitos Não Funcionais**: Incluem aspectos como desempenho, escalabilidade, segurança e usabilidade.
 
 ## VAs - Variáveis Arquiteturais
+
 As Variáveis Arquiteturais (VAs) representam as decisões ou escolhas que podem ser feitas durante o design da arquitetura. Elas são flexíveis e podem variar dependendo do contexto ou das necessidades do projeto. Exemplos incluem:
+
 - Escolha de tecnologias (e.g., frameworks, linguagens de programação).
 - Padrões arquiteturais (e.g., microsserviços, monolito).
 - Estratégias de deploy (e.g., cloud, on-premises).
@@ -15,9 +19,10 @@ Esses conceitos ajudam a estruturar e organizar o processo de design arquitetura
 
 ## Stakeholders
 
-Os stakeholders são todas as partes interessadas que possuem influência ou são impactadas pelo projeto de software. Eles podem incluir indivíduos, equipes ou organizações, e desempenham um papel fundamental na definição dos requisitos e no sucesso do projeto. 
+Os stakeholders são todas as partes interessadas que possuem influência ou são impactadas pelo projeto de software. Eles podem incluir indivíduos, equipes ou organizações, e desempenham um papel fundamental na definição dos requisitos e no sucesso do projeto.
 
 Exemplos de stakeholders no contexto da arquitetura de software:
+
 - **Clientes/Usuários Finais**: Utilizam o sistema e fornecem feedback sobre suas necessidades e expectativas.
 - **Equipe de Desenvolvimento**: Responsável por implementar a solução arquitetural.
 - **Gerentes de Projeto**: Garantem que o projeto atenda aos prazos, orçamento e escopo.
@@ -29,9 +34,9 @@ Entender as necessidades e expectativas dos stakeholders é essencial para criar
 
 ## Custo | Prazo | Qualidade
 
-Na arquitetura de software, é essencial considerar três pilares fundamentais: **Custo**, **Prazo** e **Qualidade**. 
+Na arquitetura de software, é essencial considerar três pilares fundamentais: **Custo**, **Prazo** e **Qualidade**.
 
-O arquiteto deve avaliar cuidadosamente esses aspectos ao iniciar o projeto, pois os requisitos arquiteturais serão definidos com base na prioridade estabelecida pela empresa. Por exemplo, a organização pode optar por priorizar a redução de custos, a entrega rápida ou a alta qualidade do produto final. 
+O arquiteto deve avaliar cuidadosamente esses aspectos ao iniciar o projeto, pois os requisitos arquiteturais serão definidos com base na prioridade estabelecida pela empresa. Por exemplo, a organização pode optar por priorizar a redução de custos, a entrega rápida ou a alta qualidade do produto final.
 
 Essas decisões impactam diretamente as escolhas técnicas e estratégicas ao longo do desenvolvimento do projeto.
 
@@ -40,6 +45,7 @@ Essas decisões impactam diretamente as escolhas técnicas e estratégicas ao lo
 Os componentes arquiteturais são elementos fundamentais de uma arquitetura de software, cada um com um propósito bem definido e responsável por executar tarefas específicas dentro do sistema. Eles colaboram para atender aos requisitos funcionais e não funcionais da aplicação, garantindo modularidade, escalabilidade e manutenibilidade.
 
 ### Exemplos de Componentes Arquiteturais:
+
 - **Cache**: Armazena dados temporariamente para melhorar o desempenho e reduzir a latência de acesso.
 - **Fila (Message Queue)**: Gerencia a comunicação assíncrona entre serviços, garantindo resiliência e desacoplamento.
 - **API Gateway**: Atua como ponto de entrada único para APIs, gerenciando autenticação, roteamento e limitação de taxa (rate limiting).
@@ -62,3 +68,15 @@ O acrônimo **ACID** representa os quatro pilares fundamentais que garantem a co
 - **Durabilidade**: Uma vez que uma transação é confirmada (commit), suas alterações são permanentemente gravadas no banco de dados, mesmo em caso de falhas no sistema.
 
 Esses princípios são essenciais para garantir a integridade e a confiabilidade dos dados em sistemas transacionais.
+
+## Camada de Integração
+
+A camada de integração conecta diferentes sistemas ou serviços, permitindo a troca de informações de forma eficiente e confiável. Exemplos de abordagens comuns:
+
+- **Arquivos**: Compartilhamento de arquivos via pastas compartilhadas ou FTP.
+- **Filas**: Enfileiramento de mensagens para comunicação assíncrona (e.g., RabbitMQ, Kafka).
+- **APIs**: Exposição de endpoints para comunicação síncrona ou assíncrona.
+- **Banco de Dados**: Integração direta em nível de banco de dados, como consultas ou replicação.
+- **Outros**: Webhooks para notificações em tempo real, gRPC para comunicação de alto desempenho e barramentos como ESB (Enterprise Service Bus).
+
+Essas abordagens são escolhidas com base nos requisitos de desempenho, escalabilidade e desacoplamento do sistema.
