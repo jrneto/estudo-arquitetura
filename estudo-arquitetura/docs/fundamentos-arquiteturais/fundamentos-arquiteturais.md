@@ -80,3 +80,52 @@ A camada de integração conecta diferentes sistemas ou serviços, permitindo a 
 - **Outros**: Webhooks para notificações em tempo real, gRPC para comunicação de alto desempenho e barramentos como ESB (Enterprise Service Bus).
 
 Essas abordagens são escolhidas com base nos requisitos de desempenho, escalabilidade e desacoplamento do sistema.
+
+## Consumer-Driven Contracts (CDC)
+
+O padrão **Consumer-Driven Contracts** é uma abordagem para garantir que os contratos de comunicação entre microserviços sejam mantidos e testados de forma eficiente. Ele foca em validar que os serviços (producers) atendem às expectativas dos consumidores (consumers) em termos de APIs ou mensagens.
+
+### Como funciona:
+1. **Contrato Definido pelo Consumidor**:
+   - O consumidor define um contrato que especifica como ele espera que o serviço produtor se comporte (e.g., formato de dados, endpoints, respostas esperadas).
+   - Esse contrato é compartilhado com o produtor.
+
+2. **Testes Baseados no Contrato**:
+   - O consumidor testa localmente o contrato para garantir que ele está correto.
+   - O produtor utiliza o contrato para validar que sua implementação atende às expectativas do consumidor.
+
+3. **Automação**:
+   - Ferramentas como **Pact** ou **Spring Cloud Contract** são usadas para automatizar a criação, validação e verificação dos contratos.
+
+### Benefícios:
+- **Desacoplamento**: Consumidores e produtores podem evoluir de forma independente, desde que respeitem os contratos.
+- **Confiabilidade**: Reduz o risco de falhas na integração entre microserviços.
+- **Feedback Rápido**: Problemas de compatibilidade são detectados cedo no ciclo de desenvolvimento.
+
+### Exemplo:
+Imagine um microserviço de pagamento (produtor) e um microserviço de pedidos (consumidor). O consumidor define um contrato que especifica:
+- Endpoint: `POST /payments`
+- Request body: 
+  ```json
+  {
+    "orderId": "123",
+    "amount": 100.0
+  }
+- Response body: 
+```json
+{
+  "status": "success",
+  "transactionId": "abc123"
+}
+```
+
+Essa abordagem é amplamente utilizada em arquiteturas de microserviços para garantir a compatibilidade e a comunicação confiável entre serviços.
+
+## Escalabilidade
+
+A escalabilidade é a capacidade de uma aplicação ou sistema de lidar com um aumento na demanda de forma eficiente, mantendo o desempenho e a disponibilidade. Ela pode ser alcançada de duas formas principais:
+
+1. **Escalabilidade Vertical**: Aumentar os recursos de um único servidor, como adicionar mais memória, CPU ou armazenamento.
+2. **Escalabilidade Horizontal**: Adicionar mais instâncias ou servidores para distribuir a carga de trabalho.
+
+Um sistema escalável é projetado para crescer de acordo com as necessidades do negócio, garantindo que ele continue a atender aos usuários mesmo em cenários de alta demanda.
