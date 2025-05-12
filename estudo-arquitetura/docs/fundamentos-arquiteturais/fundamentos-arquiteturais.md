@@ -86,11 +86,14 @@ Essas abordagens são escolhidas com base nos requisitos de desempenho, escalabi
 O padrão **Consumer-Driven Contracts** é uma abordagem para garantir que os contratos de comunicação entre microserviços sejam mantidos e testados de forma eficiente. Ele foca em validar que os serviços (producers) atendem às expectativas dos consumidores (consumers) em termos de APIs ou mensagens.
 
 ### Como funciona:
+
 1. **Contrato Definido pelo Consumidor**:
+
    - O consumidor define um contrato que especifica como ele espera que o serviço produtor se comporte (e.g., formato de dados, endpoints, respostas esperadas).
    - Esse contrato é compartilhado com o produtor.
 
 2. **Testes Baseados no Contrato**:
+
    - O consumidor testa localmente o contrato para garantir que ele está correto.
    - O produtor utiliza o contrato para validar que sua implementação atende às expectativas do consumidor.
 
@@ -98,20 +101,25 @@ O padrão **Consumer-Driven Contracts** é uma abordagem para garantir que os co
    - Ferramentas como **Pact** ou **Spring Cloud Contract** são usadas para automatizar a criação, validação e verificação dos contratos.
 
 ### Benefícios:
+
 - **Desacoplamento**: Consumidores e produtores podem evoluir de forma independente, desde que respeitem os contratos.
 - **Confiabilidade**: Reduz o risco de falhas na integração entre microserviços.
 - **Feedback Rápido**: Problemas de compatibilidade são detectados cedo no ciclo de desenvolvimento.
 
 ### Exemplo:
+
 Imagine um microserviço de pagamento (produtor) e um microserviço de pedidos (consumidor). O consumidor define um contrato que especifica:
+
 - Endpoint: `POST /payments`
-- Request body: 
+- Request body:
   ```json
   {
     "orderId": "123",
     "amount": 100.0
   }
-- Response body: 
+  ```
+- Response body:
+
 ```json
 {
   "status": "success",
@@ -129,3 +137,141 @@ A escalabilidade é a capacidade de uma aplicação ou sistema de lidar com um a
 2. **Escalabilidade Horizontal**: Adicionar mais instâncias ou servidores para distribuir a carga de trabalho.
 
 Um sistema escalável é projetado para crescer de acordo com as necessidades do negócio, garantindo que ele continue a atender aos usuários mesmo em cenários de alta demanda.
+
+## LOG
+
+Os logs são registros fundamentais para monitorar, diagnosticar e melhorar a qualidade de sistemas de software. Eles desempenham um papel crucial em diversas áreas, como troubleshooting, análise de métricas e monitoramento contínuo.
+
+### **Objetivos dos Logs**
+
+1. **Troubleshooting**: Identificar e analisar erros ou falhas no sistema para facilitar a resolução de problemas.
+2. **Métricas de Qualidade**: Avaliar a saúde do sistema, como tempo de resposta, taxa de erros e desempenho geral.
+3. **Métricas de Infraestrutura**: Monitorar recursos como CPU, memória, rede e serviços utilizando ferramentas de APM (Application Performance Monitoring).
+4. **Métricas de Negócio**: Obter insights sobre o comportamento do usuário, conversões e outros indicadores de desempenho relacionados ao negócio.
+5. **Continuous Monitoring**: Garantir a observabilidade contínua do sistema, detectando anomalias em tempo real.
+
+### **Tipos de Logs**
+
+Os logs podem ser armazenados e gerenciados de diferentes formas, dependendo do contexto e da necessidade:
+
+- **Banco de Dados**: Logs armazenados em tabelas para fácil consulta e análise estruturada.
+- **Arquivo Texto**: Logs gravados em arquivos locais ou remotos, geralmente no formato `.log` ou `.txt`.
+- **Bash**: Logs gerados por scripts de shell, úteis para automações e tarefas administrativas.
+- **Ferramental Apropriado**: Uso de ferramentas especializadas como ELK Stack (Elasticsearch, Logstash, Kibana), Splunk, ou Datadog para coleta, análise e visualização de logs.
+
+### **Estrutura de um Log**
+
+Um log bem estruturado deve conter informações essenciais para facilitar a análise. Abaixo está um exemplo de estrutura JSON para logs:
+
+```json
+{
+  "log_id": "unique-log-id",
+  "type": "error", // 'error' | 'warning' | 'info'
+  "title": "Descriptive title of the log",
+  "message": "Detailed message explaining the log event",
+  "stacktrace": "Stack trace for debugging (if applicable)",
+  "timestamp": "2023-10-10T12:00:00Z",
+  "context": {
+    "user_id": "12345",
+    "transaction_id": "abcde-67890",
+    "service": "service-name"
+  }
+}
+```
+
+### **Boas Práticas para Logs**
+
+1. **Padronização**: Use um formato consistente (como JSON) para facilitar a análise automatizada.
+2. **Níveis de Log**: Classifique os logs em níveis como `DEBUG`, `INFO`, `WARNING`, `ERROR`, e `CRITICAL`.
+3. **Contexto**: Inclua informações contextuais, como IDs de usuário, transações e serviços, para facilitar a rastreabilidade.
+4. **Segurança**: Evite registrar informações sensíveis, como senhas ou dados pessoais, em texto claro.
+5. **Rotação de Logs**: Implemente políticas de retenção e rotação para evitar o crescimento descontrolado dos arquivos de log.
+6. **Monitoramento e Alertas**: Configure alertas para eventos críticos ou padrões anômalos detectados nos logs.
+
+## Padrão SAGA
+
+O padrão SAGA é uma abordagem para gerenciar transações distribuídas em sistemas de microsserviços. Ele divide uma transação longa em uma sequência de pequenas transações locais, cada uma executada por um serviço diferente. Caso alguma etapa falhe, o SAGA executa ações de compensação para desfazer as operações anteriores, garantindo a consistência dos dados sem a necessidade de bloqueios distribuídos.
+
+## API Composition
+
+O padrão arquitetural API Composition é utilizado para implementar consultas agregadas em sistemas de microsserviços. Nele, um componente (o API Composer) recebe uma requisição do cliente e orquestra chamadas a múltiplos microsserviços, combinando as respostas em um único payload. Esse padrão é indicado quando os dados necessários para uma operação estão distribuídos entre diferentes serviços, evitando acoplamento direto entre eles e simplificando a lógica de agregação no lado do cliente.
+
+## Microservices Patterns
+
+Os padrões de microserviços são abordagens arquiteturais e técnicas para projetar, implementar e operar sistemas baseados em microserviços. Eles ajudam a resolver desafios comuns e a padronizar práticas em ambientes distribuídos.
+
+### Tipos de Microserviços
+
+- **Microserviço Orquestrado**  
+  Utiliza um componente central (orquestrador) para coordenar o fluxo de trabalho entre serviços, controlando a ordem e as dependências das operações (ex: SAGA Orquestrado).
+
+- **Microserviço Coreografado**  
+  Os próprios serviços reagem a eventos e interagem de forma descentralizada, sem um coordenador central, promovendo maior desacoplamento (ex: SAGA Coreografado).
+
+- **Microserviço Online ou Batch**
+
+  - _Online_: Processamento em tempo real, respondendo imediatamente a requisições.
+  - _Batch_: Processamento em lotes, geralmente agendado ou disparado por eventos.
+
+- **APIs, BFFs, Microservices**
+
+  - _APIs_: Interfaces para comunicação entre serviços.
+  - _BFF (Backend for Frontend)_: Camada intermediária que adapta APIs para diferentes clientes (web, mobile).
+  - _Microservices_: Serviços independentes, cada um responsável por uma funcionalidade de negócio.
+
+- **Síncronos ou Assíncronos**
+  - _Síncronos_: Comunicação direta e imediata (ex: REST, gRPC).
+  - _Assíncronos_: Comunicação desacoplada via mensagens ou eventos (ex: RabbitMQ, Kafka).
+
+---
+
+### Pontos Negativos dos Microserviços
+
+- **Aumento da Complexidade**
+
+  - Manutenabilidade: Mais difícil de manter devido à quantidade de serviços.
+  - Segurança: Superfície de ataque maior, exige políticas robustas.
+  - Observabilidade: Necessidade de monitoramento distribuído (logs, métricas, tracing).
+  - Testabilidade: Testes de integração e ponta a ponta mais complexos.
+  - Troubleshooting: Diagnóstico de falhas mais difícil devido à distribuição.
+  - Deploy: Gerenciamento de múltiplos pipelines e versões.
+
+- **Padronização e Padrões**
+
+  - É fundamental definir padrões de implementação, comunicação, autenticação e deploy para garantir interoperabilidade e governança.
+
+- **Custos**
+  - Equipes maiores e mais especializadas.
+  - Maior necessidade de automação e ferramentas de DevOps.
+  - Mais recursos de infraestrutura (rede, storage, CI/CD, observabilidade).
+  - Componentes arquiteturais adicionais (API Gateway, Service Mesh, etc).
+
+---
+
+### Pontos Positivos dos Microserviços
+
+- **Escalabilidade e Elasticidade**
+
+  - Permite escalar apenas os serviços necessários, otimizando custos e recursos.
+  - Elasticidade: Capacidade de ajustar recursos conforme demanda (pay-as-you-go).
+
+- **Disponibilidade e Resiliência**
+
+  - Falhas em um serviço não afetam todo o sistema.
+  - Possibilidade de deploys independentes e rollback mais seguro.
+
+- **Time to Market**
+
+  - Equipes podem trabalhar de forma autônoma, acelerando entregas e inovação.
+
+- **Suporte a Times Multidisciplinares**
+
+  - Permite que especialistas atuem em domínios específicos, promovendo ownership.
+
+- **Suporte a Grande Volume de Usuários**
+  - Arquitetura preparada para atender alta demanda e crescimento contínuo.
+
+---
+
+> **Resumo:**  
+> Microserviços trazem benefícios claros de escalabilidade, resiliência e agilidade, mas exigem maturidade técnica, padronização e investimento em automação e observabilidade para lidar com a complexidade e os custos adicionais.
