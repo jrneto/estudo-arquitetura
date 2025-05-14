@@ -275,3 +275,35 @@ Os padrões de microserviços são abordagens arquiteturais e técnicas para pro
 
 > **Resumo:**  
 > Microserviços trazem benefícios claros de escalabilidade, resiliência e agilidade, mas exigem maturidade técnica, padronização e investimento em automação e observabilidade para lidar com a complexidade e os custos adicionais.
+
+## Anti Corruption Layer Pattern
+
+O padrão **Anti Corruption Layer (ACL)** é uma abordagem arquitetural utilizada para proteger o domínio de um sistema contra influências indesejadas de sistemas legados ou externos. Ele atua como uma camada intermediária que traduz, adapta e isola as diferenças de modelo, linguagem e regras de negócio entre dois contextos distintos, evitando que conceitos ou implementações inadequadas "contaminem" o novo sistema.
+
+![alt text](anticorrupção.drawio.png)
+
+### Quando Utilizar
+
+- **Integração com sistemas legados**: Quando é necessário consumir dados ou funcionalidades de um sistema antigo, cujas regras de negócio, modelos de dados ou terminologias são diferentes (ou inadequadas) para o novo sistema.
+- **Migração gradual**: Ao migrar funcionalidades de um sistema legado para um novo, a ACL permite coexistência e comunicação sem acoplar diretamente os domínios.
+- **Proteção do domínio**: Sempre que for importante manter a integridade e a clareza do modelo de domínio do sistema principal, evitando dependências diretas de sistemas externos.
+
+### Exemplo Prático
+
+Imagine que você está desenvolvendo um novo sistema de vendas, mas precisa consultar informações de clientes em um sistema legado, onde o conceito de "cliente" é diferente do seu novo domínio (por exemplo, o legado mistura pessoas físicas e jurídicas em um único campo, enquanto o novo sistema separa claramente esses conceitos).
+
+**Sem ACL:**  
+O novo sistema teria que lidar diretamente com as inconsistências e complexidades do legado, poluindo seu modelo de domínio.
+
+**Com ACL:**  
+Você cria uma camada anti corrupção que:
+
+- Consome os dados do sistema legado.
+- Traduz e adapta os dados para o modelo do novo sistema.
+- Expõe apenas o que é necessário, no formato correto, para o domínio principal.
+
+```mermaid
+flowchart LR
+    A[Microservice] -- Consulta --> B[Anti Corruption Layer]
+    B -- Adapta/Traduz --> C[Sistema Legado]
+```
