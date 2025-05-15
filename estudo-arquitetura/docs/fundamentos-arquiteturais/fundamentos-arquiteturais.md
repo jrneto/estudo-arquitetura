@@ -307,3 +307,128 @@ flowchart LR
     A[Microservice] -- Consulta --> B[Anti Corruption Layer]
     B -- Adapta/Traduz --> C[Sistema Legado]
 ```
+
+## Migração de Monolito para Microservices
+
+### Strangler Pattern
+
+O **Strangler Pattern** é uma estratégia para migrar sistemas monolíticos para microservices de forma gradual e segura. Em vez de reescrever todo o sistema de uma vez, novas funcionalidades são desenvolvidas como microservices independentes. Aos poucos, partes do monolito são substituídas por esses novos serviços, até que o monolito possa ser totalmente desativado.
+
+**Vantagens:**
+
+- Reduz riscos de migração.
+- Permite testes e rollback mais fáceis.
+- Facilita a adoção de novas tecnologias.
+
+**Como funciona:**
+
+1. Identifique uma funcionalidade do monolito para migrar.
+2. Implemente essa funcionalidade como um microservice.
+3. Use um roteador (proxy ou API Gateway) para direcionar as requisições para o monolito ou para o microservice.
+4. Repita o processo até migrar todo o sistema.
+
+## Decompose by Subdomain
+
+A estratégia **Decompose by Subdomain** consiste em dividir um sistema monolítico em microservices com base nos subdomínios do negócio. Cada subdomínio representa uma área funcional ou contexto específico da aplicação, alinhando a arquitetura de software à estrutura do negócio.
+
+**Vantagens:**
+
+- Facilita a identificação de limites claros entre os serviços.
+- Reduz o acoplamento entre equipes e funcionalidades.
+- Permite que cada microservice evolua de forma independente.
+
+**Como funciona:**
+
+1. Identifique os subdomínios do negócio (por exemplo: faturamento, cadastro, logística).
+2. Separe o código e os dados relacionados a cada subdomínio.
+3. Implemente cada subdomínio como um microservice independente.
+4. Defina contratos de comunicação claros entre os serviços.
+
+Essa abordagem é fortemente baseada nos conceitos de Domain-Driven Design (DDD), promovendo uma arquitetura mais modular e alinhada aos objetivos do negócio.
+
+## Teorema CAP
+
+![alt text](image.png)
+
+O Teorema CAP, proposto por Eric Brewer, afirma que em um sistema distribuído é impossível garantir simultaneamente os três requisitos a seguir:
+
+- **Consistência (Consistency):** Todos os nós veem os mesmos dados ao mesmo tempo. Após uma operação de escrita, todas as leituras subsequentes retornam o valor atualizado.
+- **Disponibilidade (Availability):** Todo pedido recebe uma resposta (sucesso ou falha), mesmo que parte do sistema esteja indisponível.
+- **Tolerância à Partição (Partition Tolerance):** O sistema continua operando mesmo que haja falhas de comunicação entre partes do cluster (partições de rede).
+
+Segundo o teorema, um sistema distribuído pode garantir, no máximo, dois desses três requisitos ao mesmo tempo. Por exemplo:
+
+- **CA (Consistência + Disponibilidade):** Não tolera partições de rede.
+- **CP (Consistência + Tolerância à Partição):** Pode não estar sempre disponível.
+- **AP (Disponibilidade + Tolerância à Partição):** Pode retornar dados desatualizados (eventual consistency).
+
+O CAP é fundamental para entender as decisões de arquitetura em sistemas distribuídos, como bancos NoSQL, e orientar escolhas de acordo com as necessidades do negócio.
+
+## Micro-frontends
+
+**Micro-frontends** é uma abordagem arquitetural onde uma aplicação frontend é dividida em partes menores e independentes, chamadas de micro-frontends. Cada micro-frontend é responsável por uma funcionalidade específica do sistema, podendo ser desenvolvido, testado e implantado de forma autônoma por diferentes times, assim como acontece com microservices no backend.
+
+### Vantagens
+
+- **Escalabilidade:** Permite que múltiplos times trabalhem de forma independente.
+- **Reutilização:** Componentes podem ser reaproveitados em diferentes projetos.
+- **Deploy independente:** Cada micro-frontend pode ser atualizado sem impactar o restante da aplicação.
+
+### Exemplo de Aplicação
+
+Imagine um e-commerce com as seguintes áreas:
+
+- **Catálogo de Produtos**
+- **Carrinho de Compras**
+- **Perfil do Usuário**
+
+Cada área pode ser um micro-frontend, desenvolvido com diferentes frameworks (React, Vue, Angular) e integrado em tempo de execução.
+
+#### Exemplo prático usando Module Federation (Webpack 5)
+
+**1. Catálogo de Produtos (Angular)**
+
+```ts
+// catalogo.component.ts
+import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-catalogo',
+  template: `<div>Catálogo de Produtos</div>`
+})
+export class CatalogoComponent {}
+```
+
+## Single Responsibility Principle
+
+O Princípio da Responsabilidade Única (Single Responsibility Principle - SRP) é um dos princípios SOLID de design de software. Ele afirma que uma classe, módulo ou função deve ter apenas um motivo para mudar, ou seja, deve ser responsável por apenas uma parte específica da funcionalidade do sistema.
+
+### Benefícios
+- **Facilidade de manutenção:** Alterações em uma responsabilidade não afetam outras partes do código.
+- **Reutilização:** Classes e funções com responsabilidades bem definidas são mais fáceis de reutilizar.
+- **Testabilidade:** Unidades menores e focadas são mais simples de testar.
+
+### Exemplo em Angular
+
+```ts
+// Responsável apenas por buscar dados de produtos
+@Injectable({ providedIn: 'root' })
+export class ProductService {
+  constructor(private http: HttpClient) {}
+  getProducts() {
+    return this.http.get('/api/products');
+  }
+}
+
+// Responsável apenas por exibir produtos
+@Component({
+  selector: 'app-product-list',
+  template: `<ul><li *ngFor="let p of products">{{ p.name }}</li></ul>`
+})
+export class ProductListComponent implements OnInit {
+  products: any[] = [];
+  constructor(private productService: ProductService) {}
+  ngOnInit() {
+    this.productService.getProducts().subscribe(data => this.products = data);
+  }
+}
