@@ -308,6 +308,138 @@ flowchart LR
     B -- Adapta/Traduz --> C[Sistema Legado]
 ```
 
+```mermaid
+    graph TD
+    BFF["BFF de Abertura de Conta"]
+
+    subgraph Downstream APIs
+        CO8["CO8"]
+        OU3["OU3"]
+        HW["HW"]
+        CW3["CW3"]
+        FH5["FH5"]
+        QA["QA"]
+        EK7["EK7"]
+        PW2["PW2"]
+    end
+
+    BFF --> CO8
+    BFF --> OU3
+    BFF --> HW
+    BFF --> CW3
+    BFF --> FH5
+    BFF --> QA
+    BFF --> EK7
+    BFF --> PW2
+
+    subgraph CO8_Routes
+        CO8_1["/jornadas_venda/v1/jornadas_venda"]
+        CO8_2["/jornadas_venda/v1/jornadas_venda/tarefas/{id_tarefa}/completar"]
+    end
+
+    subgraph OU3_Routes
+        OU3_1["/seguranca/v2/avaliacoes_biometria_facial"]
+        OU3_2["/customeriam-biofacialsecuritycw-tecint-aws/v1/keys"]
+    end
+
+    subgraph HW_Routes
+        HW_1["/pessoas/v1/pessoas_juridicas/{num_cnpj}"]
+    end
+
+    subgraph CW3_Routes
+        CW3_1["/gestao_dados_referencia/v1/unidades_federativas"]
+        CW3_2["/gestao_dados_referencia/v1/paises"]
+    end
+
+    subgraph FH5_Routes
+        FH5_1["/appinvestimentos-aws/v1/devices/{session_id}"]
+        FH5_2["/appinvestimentos-aws/v1/investidores/{id_investidor}/contas"]
+        FH5_3["/appinvestimentos-aws/v1/allow_lists"]
+    end
+
+    subgraph QA_Routes
+        QA_1["/informacoes_corporativas/v1/dominios/{codigo_dominio}/valores_dominio"]
+    end
+
+    subgraph EK7_Routes
+        EK7_1["Lib OTP - Valida OTP"]
+    end
+
+    subgraph PW2_Routes
+        PW2_1["Lib OTP - Cria senha de acesso"]
+    end
+
+    CO8 --> CO8_1
+    CO8 --> CO8_2
+
+    OU3 --> OU3_1
+    OU3 --> OU3_2
+
+    HW --> HW_1
+
+    CW3 --> CW3_1
+    CW3 --> CW3_2
+
+    FH5 --> FH5_1
+    FH5 --> FH5_2
+    FH5 --> FH5_3
+
+    QA --> QA_1
+
+    EK7 --> EK7_1
+
+    PW2 --> PW2_1
+```
+
+```mermaid
+graph TD
+    A[Mobile App] --> B[AWS SQS]
+    B --> C["AWS Lambda (Agent & Supervisor)"]
+    C --> D[Redis Database]
+    C --> E[External Services]
+    C --> F[AWS CloudWatch]
+    D --> G[Estado Final: Conta Aberta ou Negada]
+
+    subgraph Processamento
+        C
+        D
+        E
+    end
+
+    subgraph Monitoramento
+        F
+    end
+
+    subgraph Conclusão
+        G
+    end
+```
+
+```mermaid
+sequenceDiagram
+    participant Lambda
+    participant CO8
+    participant PW2
+
+    Lambda->>CO8: Obtem a proposta
+    CO8-->>Lambda: Proposta obtida
+
+    Lambda->>CO8: Coleta dados documento
+    CO8-->>Lambda: Dados do documento coletados
+
+    Lambda->>CO8: Coleta dados complementares
+    CO8-->>Lambda: Dados complementares coletados
+
+    Lambda->>PW2: Cria a senha no PW2
+    PW2-->>Lambda: Senha criada
+
+    Lambda->>CO8: Informa senha criada para o CO8
+    CO8-->>Lambda: Senha informada
+
+    Lambda->>CO8: Coleta variáveis de fraude
+    CO8-->>Lambda: Variáveis de fraude coletadas
+```
+
 ## Migração de Monolito para Microservices
 
 ### Strangler Pattern
@@ -390,11 +522,11 @@ Cada área pode ser um micro-frontend, desenvolvido com diferentes frameworks (R
 
 ```ts
 // catalogo.component.ts
-import { Component } from '@angular/core';
+import { Component } from "@angular/core";
 
 @Component({
-  selector: 'app-catalogo',
-  template: `<div>Catálogo de Produtos</div>`
+  selector: "app-catalogo",
+  template: `<div>Catálogo de Produtos</div>`,
 })
 export class CatalogoComponent {}
 ```
@@ -404,6 +536,7 @@ export class CatalogoComponent {}
 O Princípio da Responsabilidade Única (Single Responsibility Principle - SRP) é um dos princípios SOLID de design de software. Ele afirma que uma classe, módulo ou função deve ter apenas um motivo para mudar, ou seja, deve ser responsável por apenas uma parte específica da funcionalidade do sistema.
 
 ### Benefícios
+
 - **Facilidade de manutenção:** Alterações em uma responsabilidade não afetam outras partes do código.
 - **Reutilização:** Classes e funções com responsabilidades bem definidas são mais fáceis de reutilizar.
 - **Testabilidade:** Unidades menores e focadas são mais simples de testar.
@@ -412,23 +545,28 @@ O Princípio da Responsabilidade Única (Single Responsibility Principle - SRP) 
 
 ```ts
 // Responsável apenas por buscar dados de produtos
-@Injectable({ providedIn: 'root' })
+@Injectable({ providedIn: "root" })
 export class ProductService {
   constructor(private http: HttpClient) {}
   getProducts() {
-    return this.http.get('/api/products');
+    return this.http.get("/api/products");
   }
 }
 
 // Responsável apenas por exibir produtos
 @Component({
-  selector: 'app-product-list',
-  template: `<ul><li *ngFor="let p of products">{{ p.name }}</li></ul>`
+  selector: "app-product-list",
+  template: `<ul>
+    <li *ngFor="let p of products">{{ p.name }}</li>
+  </ul>`,
 })
 export class ProductListComponent implements OnInit {
   products: any[] = [];
   constructor(private productService: ProductService) {}
   ngOnInit() {
-    this.productService.getProducts().subscribe(data => this.products = data);
+    this.productService
+      .getProducts()
+      .subscribe((data) => (this.products = data));
   }
 }
+```
