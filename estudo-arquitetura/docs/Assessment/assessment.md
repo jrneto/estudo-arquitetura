@@ -17,3 +17,7 @@
 ## 3. Assessment
 
 Mapa mental: https://www.mindmeister.com/app/map/2707636637?t=4nPmm1NhOX
+
+ArchBoard: https://docs.google.com/spreadsheets/d/1uMZ1WNhnVD-xi0uAbaOmdOXtesiVwK0qaD9BBug_neA/edit?gid=376703634#gid=376703634
+
+ArchBoard Meu: https://docs.google.com/spreadsheets/d/12e1Exe45Fs0z_3Cf0gJS88UjMLjfbhQY43Dyqztt0-M/edit?gid=1367273134#gid=1367273134
