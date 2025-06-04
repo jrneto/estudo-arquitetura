@@ -21,3 +21,17 @@ Mapa mental: https://www.mindmeister.com/app/map/2707636637?t=4nPmm1NhOX
 ArchBoard: https://docs.google.com/spreadsheets/d/1uMZ1WNhnVD-xi0uAbaOmdOXtesiVwK0qaD9BBug_neA/edit?gid=376703634#gid=376703634
 
 ArchBoard Meu: https://docs.google.com/spreadsheets/d/12e1Exe45Fs0z_3Cf0gJS88UjMLjfbhQY43Dyqztt0-M/edit?gid=1367273134#gid=1367273134
+
+## 4. Requisitos Arquiteturais (RAs)
+
+Realize o levantamento dos requisitos arquiteturais necessários para o projeto.
+
+Em seguida, utilize a Matriz de Eisenhower para priorizar cada requisito de acordo com sua urgência e importância. Essa abordagem facilita a tomada de decisão e o planejamento das próximas etapas.
+
+|                | **Urgente**       | **Não Urgente**     |
+|----------------|-------------------|---------------------|
+| **Importante** | 1. Faça agora     | 2. Planeje          |
+| Não Importante | 3. Delegue        | 4. Elimine          |
+
+> [!TIP]
+> Classifique cada requisito arquitetural na matriz acima para definir as ações prioritárias.
