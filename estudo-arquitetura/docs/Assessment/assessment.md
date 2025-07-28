@@ -28,10 +28,18 @@ Realize o levantamento dos requisitos arquiteturais necessários para o projeto.
 
 Em seguida, utilize a Matriz de Eisenhower para priorizar cada requisito de acordo com sua urgência e importância. Essa abordagem facilita a tomada de decisão e o planejamento das próximas etapas.
 
-|                | **Urgente**       | **Não Urgente**     |
-|----------------|-------------------|---------------------|
-| **Importante** | 1. Faça agora     | 2. Planeje          |
-| Não Importante | 3. Delegue        | 4. Elimine          |
+|                | **Urgente**   | **Não Urgente** |
+| -------------- | ------------- | --------------- |
+| **Importante** | 1. Faça agora | 2. Planeje      |
+| Não Importante | 3. Delegue    | 4. Elimine      |
 
 > [!TIP]
 > Classifique cada requisito arquitetural na matriz acima para definir as ações prioritárias.
+
+## 5. Dicas para reuniões de Assessment
+
+1. Sempre preencher o material
+2. Area estratégica sempre no final
+3. Sempre organizar a agenda
+4. Gravar as entrevistas
+5. Controlar o clima
